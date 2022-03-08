@@ -1,0 +1,1065 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://krd.pl/Chase3.1" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="SearchService" targetNamespace="http://krd.pl/Chase3.1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="DefaultEndpoint_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WsHttpBindingEndpoint_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xs:schema xmlns:tns="http://krd.pl/Chase3.1/Dto" elementFormDefault="qualified" targetNamespace="http://krd.pl/Chase3.1/Dto" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="SearchConsumerRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="Number" type="xs:string" />
+            <xs:element minOccurs="1" maxOccurs="1" name="NumberType" type="tns:ConsumerNumberType" />
+            <xs:element minOccurs="1" maxOccurs="1" name="AuthorizationDate" type="xs:dateTime" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:simpleType name="ConsumerNumberType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Pesel" />
+          <xs:enumeration value="OtherNumber" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="InformationDisclosureResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="DisclosureReport" type="tns:DisclosureReport" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="DisclosureReport">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Number" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="Created" type="xs:dateTime" />
+          <xs:element minOccurs="0" maxOccurs="1" name="SearchCriterion" type="tns:SearchCriterion" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Requester" type="tns:Requester" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Summary" type="tns:Summary" />
+          <xs:element minOccurs="0" maxOccurs="1" name="PositiveInformationSummary" type="tns:PositiveInformationSummary" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Report" type="tns:Report" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SearchCriterion">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="NonConsumerIdentityNumber" type="tns:NonConsumerIdentityNumber" />
+          <xs:element minOccurs="0" maxOccurs="1" name="ConsumerIdentityNumber" type="tns:ConsumerIdentityNumber" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="AuthorizationDate" type="xs:dateTime" />
+          <xs:element minOccurs="1" maxOccurs="1" name="AuthorizationDateSpecified" type="xs:boolean" />
+          <xs:element minOccurs="0" maxOccurs="1" name="ActAuthorizationDate" type="xs:dateTime" />
+          <xs:element minOccurs="1" maxOccurs="1" name="ActAuthorizationDateSpecified" type="xs:boolean" />
+          <xs:element minOccurs="1" maxOccurs="1" name="SearchType" type="tns:SearchType" />
+          <xs:element minOccurs="1" maxOccurs="1" name="SearchCriterionType" type="tns:SearchCriterionType" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="NonConsumerIdentityNumber">
+        <xs:sequence>
+          <xs:choice minOccurs="1" maxOccurs="1">
+            <xs:element minOccurs="0" maxOccurs="1" name="Custom" type="tns:CustomNumber" />
+            <xs:element minOccurs="0" maxOccurs="1" name="TaxId" type="xs:string" />
+          </xs:choice>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CustomNumber">
+        <xs:simpleContent>
+          <xs:extension base="xs:string">
+            <xs:attribute name="type" type="xs:string" />
+          </xs:extension>
+        </xs:simpleContent>
+      </xs:complexType>
+      <xs:complexType name="ConsumerIdentityNumber">
+        <xs:sequence>
+          <xs:choice minOccurs="1" maxOccurs="1">
+            <xs:element minOccurs="0" maxOccurs="1" name="Custom" type="tns:CustomNumber" />
+            <xs:element minOccurs="0" maxOccurs="1" name="Pesel" type="xs:string" />
+          </xs:choice>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="SearchType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="RegularSearch" />
+          <xs:enumeration value="SelfSearch" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="SearchCriterionType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Pesel" />
+          <xs:enumeration value="TaxId" />
+          <xs:enumeration value="Name" />
+          <xs:enumeration value="OtherThanPesel" />
+          <xs:enumeration value="OtherThanTaxId" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="Requester">
+        <xs:sequence>
+          <xs:choice minOccurs="1" maxOccurs="1">
+            <xs:element minOccurs="0" maxOccurs="1" name="Consumer" type="tns:ConsumerMin" />
+            <xs:element minOccurs="0" maxOccurs="1" name="Entrepreneur" type="tns:EntrepreneurMin" />
+            <xs:element minOccurs="0" maxOccurs="1" name="LegalPerson" type="tns:LegalPersonMin" />
+          </xs:choice>
+          <xs:element minOccurs="0" maxOccurs="1" name="LoginFullName" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="LoginName" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ConsumerMin">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="FirstName" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="SecondName" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Surname" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="IdentityNumber" type="tns:ConsumerIdentityNumber" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Consumer">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:ConsumerMin">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="1" name="Address" type="tns:Address" />
+              <xs:element minOccurs="0" maxOccurs="1" name="AddressForMail" type="tns:Address" />
+              <xs:element minOccurs="0" maxOccurs="1" name="DocumentNumber" type="tns:DocumentNumber" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="Address">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Line" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DocumentNumber">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Number" type="tns:CustomNumber" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="EntrepreneurMin">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="AddressForMail" type="tns:Address" />
+          <xs:element minOccurs="0" maxOccurs="1" name="ResidenceAddress" type="tns:Address" />
+          <xs:element minOccurs="0" maxOccurs="1" name="SeatAddress" type="tns:Address" />
+          <xs:element minOccurs="0" maxOccurs="1" name="NonConsumerIdentityNumber" type="tns:NonConsumerIdentityNumber" />
+          <xs:element minOccurs="0" maxOccurs="1" name="FirstName" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Surname" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Entrepreneur">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:EntrepreneurMin">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="1" name="SecondName" type="xs:string" />
+              <xs:element minOccurs="0" maxOccurs="1" name="ConsumerIdentityNumber" type="tns:ConsumerIdentityNumber" />
+              <xs:element minOccurs="0" maxOccurs="1" name="DocumentNumber" type="tns:DocumentNumber" />
+              <xs:element minOccurs="0" maxOccurs="1" name="RegistrationNumber" type="xs:string" />
+              <xs:element minOccurs="0" maxOccurs="1" name="RegistryName" type="xs:string" />
+              <xs:element minOccurs="0" maxOccurs="1" name="Ekd" type="xs:string" />
+              <xs:element minOccurs="0" maxOccurs="1" name="Regon" type="xs:string" />
+              <xs:element minOccurs="0" maxOccurs="1" name="Representatives" type="tns:ArrayOfRepresentative" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="ArrayOfRepresentative">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Representative" type="tns:Representative" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Representative">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="FirstName" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="SecondName" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Surname" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="LegalPersonMin">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="IdentityNumber" type="tns:NonConsumerIdentityNumber" />
+          <xs:element minOccurs="0" maxOccurs="1" name="SeatAddress" type="tns:Address" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="LegalPerson">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:LegalPersonMin">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="1" name="RegistrationNumber" type="xs:string" />
+              <xs:element minOccurs="0" maxOccurs="1" name="RegistryName" type="xs:string" />
+              <xs:element minOccurs="0" maxOccurs="1" name="Regon" type="xs:string" />
+              <xs:element minOccurs="0" maxOccurs="1" name="Persons" type="tns:ArrayOfPerson" />
+              <xs:element minOccurs="0" maxOccurs="1" name="Representatives" type="tns:ArrayOfRepresentative" />
+              <xs:element minOccurs="0" maxOccurs="1" name="Ekd" type="xs:string" />
+              <xs:element minOccurs="0" maxOccurs="1" name="Stakeholders" type="tns:ArrayOfStakeholder" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="ArrayOfPerson">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Person" type="tns:Person" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Person">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="FirstName" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="SecondName" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Surname" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="OtherRole" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="IdentityNumber" type="tns:ConsumerIdentityNumber" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ArrayOfStakeholder">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Stakeholder" type="tns:Stakeholder" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Stakeholder">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="NonConsumerIdentityNumber" type="tns:NonConsumerIdentityNumber" />
+          <xs:element minOccurs="0" maxOccurs="1" name="FirstName" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="SecondName" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Surname" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="ConsumerIdentityNumber" type="tns:ConsumerIdentityNumber" />
+          <xs:element minOccurs="0" maxOccurs="1" name="DocumentNumber" type="tns:DocumentNumber" />
+          <xs:element minOccurs="0" maxOccurs="1" name="RegistrationNumber" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="RegistryName" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Ekd" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Regon" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="AddressForMail" type="tns:Address" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Address" type="tns:Address" />
+          <xs:element minOccurs="0" maxOccurs="1" name="SeatAddress" type="tns:Address" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Persons" type="tns:ArrayOfPerson" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Representatives" type="tns:ArrayOfRepresentative" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Summary">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="InformationCount" type="xs:int" />
+          <xs:element minOccurs="1" maxOccurs="1" name="OInformationCount" type="xs:int" />
+          <xs:element minOccurs="1" maxOccurs="1" name="DInformationCount" type="xs:int" />
+          <xs:element minOccurs="1" maxOccurs="1" name="DebtorsCount" type="xs:int" />
+          <xs:element minOccurs="1" maxOccurs="1" name="CreditorsCount" type="xs:int" />
+          <xs:element minOccurs="0" maxOccurs="1" name="TotalArrears" type="tns:Money" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Money">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:Entity">
+            <xs:sequence>
+              <xs:element minOccurs="1" maxOccurs="1" name="Amount" type="xs:decimal" />
+              <xs:element minOccurs="1" maxOccurs="1" name="Currency" type="tns:Currency" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="Entity" abstract="true" />
+      <xs:simpleType name="Currency">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="AED" />
+          <xs:enumeration value="AFA" />
+          <xs:enumeration value="ALL" />
+          <xs:enumeration value="AMD" />
+          <xs:enumeration value="ANG" />
+          <xs:enumeration value="AOA" />
+          <xs:enumeration value="ARS" />
+          <xs:enumeration value="AUD" />
+          <xs:enumeration value="AWG" />
+          <xs:enumeration value="AZM" />
+          <xs:enumeration value="BAM" />
+          <xs:enumeration value="BBD" />
+          <xs:enumeration value="BDT" />
+          <xs:enumeration value="BGN" />
+          <xs:enumeration value="BHD" />
+          <xs:enumeration value="BIF" />
+          <xs:enumeration value="BMD" />
+          <xs:enumeration value="BND" />
+          <xs:enumeration value="BOB" />
+          <xs:enumeration value="BRL" />
+          <xs:enumeration value="BSD" />
+          <xs:enumeration value="BTN" />
+          <xs:enumeration value="BWP" />
+          <xs:enumeration value="BYR" />
+          <xs:enumeration value="BZD" />
+          <xs:enumeration value="CAD" />
+          <xs:enumeration value="CDF" />
+          <xs:enumeration value="CHF" />
+          <xs:enumeration value="CLP" />
+          <xs:enumeration value="CNY" />
+          <xs:enumeration value="COP" />
+          <xs:enumeration value="CRC" />
+          <xs:enumeration value="CSD" />
+          <xs:enumeration value="CUP" />
+          <xs:enumeration value="CVE" />
+          <xs:enumeration value="CYP" />
+          <xs:enumeration value="CZK" />
+          <xs:enumeration value="DJF" />
+          <xs:enumeration value="DKK" />
+          <xs:enumeration value="DOP" />
+          <xs:enumeration value="DZD" />
+          <xs:enumeration value="EEK" />
+          <xs:enumeration value="EGP" />
+          <xs:enumeration value="ERN" />
+          <xs:enumeration value="ETB" />
+          <xs:enumeration value="EUR" />
+          <xs:enumeration value="FJD" />
+          <xs:enumeration value="FKP" />
+          <xs:enumeration value="GBP" />
+          <xs:enumeration value="GEL" />
+          <xs:enumeration value="GGP" />
+          <xs:enumeration value="GHC" />
+          <xs:enumeration value="GIP" />
+          <xs:enumeration value="GMD" />
+          <xs:enumeration value="GNF" />
+          <xs:enumeration value="GTQ" />
+          <xs:enumeration value="GYD" />
+          <xs:enumeration value="HKD" />
+          <xs:enumeration value="HNL" />
+          <xs:enumeration value="HRK" />
+          <xs:enumeration value="HTG" />
+          <xs:enumeration value="HUF" />
+          <xs:enumeration value="IDR" />
+          <xs:enumeration value="ILS" />
+          <xs:enumeration value="IMP" />
+          <xs:enumeration value="INR" />
+          <xs:enumeration value="IQD" />
+          <xs:enumeration value="IRR" />
+          <xs:enumeration value="ISK" />
+          <xs:enumeration value="JEP" />
+          <xs:enumeration value="JMD" />
+          <xs:enumeration value="JOD" />
+          <xs:enumeration value="JPY" />
+          <xs:enumeration value="KES" />
+          <xs:enumeration value="KGS" />
+          <xs:enumeration value="KHR" />
+          <xs:enumeration value="KMF" />
+          <xs:enumeration value="KPW" />
+          <xs:enumeration value="KRW" />
+          <xs:enumeration value="KWD" />
+          <xs:enumeration value="KYD" />
+          <xs:enumeration value="KZT" />
+          <xs:enumeration value="LAK" />
+          <xs:enumeration value="LBP" />
+          <xs:enumeration value="LKR" />
+          <xs:enumeration value="LRD" />
+          <xs:enumeration value="LSL" />
+          <xs:enumeration value="LTL" />
+          <xs:enumeration value="LVL" />
+          <xs:enumeration value="LYD" />
+          <xs:enumeration value="MAD" />
+          <xs:enumeration value="MDL" />
+          <xs:enumeration value="MGA" />
+          <xs:enumeration value="MKD" />
+          <xs:enumeration value="MMK" />
+          <xs:enumeration value="MNT" />
+          <xs:enumeration value="MOP" />
+          <xs:enumeration value="MRO" />
+          <xs:enumeration value="MTL" />
+          <xs:enumeration value="MUR" />
+          <xs:enumeration value="MVR" />
+          <xs:enumeration value="MWK" />
+          <xs:enumeration value="MXN" />
+          <xs:enumeration value="MYR" />
+          <xs:enumeration value="MZM" />
+          <xs:enumeration value="NAD" />
+          <xs:enumeration value="NGN" />
+          <xs:enumeration value="NIO" />
+          <xs:enumeration value="NOK" />
+          <xs:enumeration value="NPR" />
+          <xs:enumeration value="NZD" />
+          <xs:enumeration value="OMR" />
+          <xs:enumeration value="PAB" />
+          <xs:enumeration value="PEN" />
+          <xs:enumeration value="PGK" />
+          <xs:enumeration value="PHP" />
+          <xs:enumeration value="PKR" />
+          <xs:enumeration value="PLN" />
+          <xs:enumeration value="PYG" />
+          <xs:enumeration value="QAR" />
+          <xs:enumeration value="ROL" />
+          <xs:enumeration value="RUR" />
+          <xs:enumeration value="RWF" />
+          <xs:enumeration value="SAR" />
+          <xs:enumeration value="SBD" />
+          <xs:enumeration value="SCR" />
+          <xs:enumeration value="SDD" />
+          <xs:enumeration value="SEK" />
+          <xs:enumeration value="SGD" />
+          <xs:enumeration value="SHP" />
+          <xs:enumeration value="SIT" />
+          <xs:enumeration value="SKK" />
+          <xs:enumeration value="SLL" />
+          <xs:enumeration value="SOS" />
+          <xs:enumeration value="SPL" />
+          <xs:enumeration value="SRD" />
+          <xs:enumeration value="STD" />
+          <xs:enumeration value="SVC" />
+          <xs:enumeration value="SYP" />
+          <xs:enumeration value="SZL" />
+          <xs:enumeration value="THB" />
+          <xs:enumeration value="TJS" />
+          <xs:enumeration value="TMM" />
+          <xs:enumeration value="TND" />
+          <xs:enumeration value="TOP" />
+          <xs:enumeration value="TRL" />
+          <xs:enumeration value="TTD" />
+          <xs:enumeration value="TVD" />
+          <xs:enumeration value="TWD" />
+          <xs:enumeration value="TZS" />
+          <xs:enumeration value="UAH" />
+          <xs:enumeration value="UGX" />
+          <xs:enumeration value="USD" />
+          <xs:enumeration value="UYU" />
+          <xs:enumeration value="UZS" />
+          <xs:enumeration value="VEB" />
+          <xs:enumeration value="VND" />
+          <xs:enumeration value="VUV" />
+          <xs:enumeration value="WST" />
+          <xs:enumeration value="XAF" />
+          <xs:enumeration value="XAG" />
+          <xs:enumeration value="XAU" />
+          <xs:enumeration value="XCD" />
+          <xs:enumeration value="XDR" />
+          <xs:enumeration value="XOF" />
+          <xs:enumeration value="XPD" />
+          <xs:enumeration value="XPF" />
+          <xs:enumeration value="XPT" />
+          <xs:enumeration value="YER" />
+          <xs:enumeration value="ZAR" />
+          <xs:enumeration value="ZMK" />
+          <xs:enumeration value="ZWD" />
+          <xs:enumeration value="NotSet" />
+          <xs:enumeration value="RON" />
+          <xs:enumeration value="RUB" />
+          <xs:enumeration value="TRY" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="PositiveInformationSummary">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="ProvidersCount" type="xs:int" />
+          <xs:element minOccurs="1" maxOccurs="1" name="PaidObligationsCount" type="xs:int" />
+          <xs:element minOccurs="1" maxOccurs="1" name="AveragePaidDebt" type="xs:decimal" />
+          <xs:element minOccurs="1" maxOccurs="1" name="AveragePaymentTimeInDays" type="xs:int" />
+          <xs:element minOccurs="1" maxOccurs="1" name="SumPaidDebt" type="xs:decimal" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Report">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="ObligationInformations" type="tns:ArrayOfObligationInformation" />
+          <xs:element minOccurs="0" maxOccurs="1" name="PaidObligationInformations" type="tns:ArrayOfPaidObligationInformation" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ArrayOfObligationInformation">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ObligationInformation" type="tns:ObligationInformation" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ObligationInformation">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Debtor" type="tns:Debtor" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Provider" type="tns:Provider" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Title" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="Type" type="tns:ObligationType" />
+          <xs:element minOccurs="0" maxOccurs="1" name="CustomType" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="PaymentDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Proceedings" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Objections" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="NoObjections" type="xs:boolean" />
+          <xs:element minOccurs="1" maxOccurs="1" name="CallSent" type="xs:dateTime" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Debt" type="tns:Money" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Arrears" type="tns:Money" />
+        </xs:sequence>
+        <xs:attribute name="category" type="xs:int" use="required" />
+        <xs:attribute name="subcategory" type="xs:int" />
+      </xs:complexType>
+      <xs:complexType name="Debtor">
+        <xs:sequence>
+          <xs:choice minOccurs="1" maxOccurs="1">
+            <xs:element minOccurs="0" maxOccurs="1" name="Consumer" type="tns:Consumer" />
+            <xs:element minOccurs="0" maxOccurs="1" name="Entrepreneur" type="tns:Entrepreneur" />
+            <xs:element minOccurs="0" maxOccurs="1" name="LegalPerson" type="tns:LegalPerson" />
+          </xs:choice>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Provider">
+        <xs:sequence>
+          <xs:choice minOccurs="1" maxOccurs="1">
+            <xs:element minOccurs="0" maxOccurs="1" name="Consumer" type="tns:Consumer" />
+            <xs:element minOccurs="0" maxOccurs="1" name="Entrepreneur" type="tns:Entrepreneur" />
+            <xs:element minOccurs="0" maxOccurs="1" name="LegalPerson" type="tns:LegalPerson" />
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="category" type="xs:int" use="required" />
+      </xs:complexType>
+      <xs:simpleType name="ObligationType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Other" />
+          <xs:enumeration value="Invoice" />
+          <xs:enumeration value="Bill" />
+          <xs:enumeration value="Contract" />
+          <xs:enumeration value="StipulatedPenalty" />
+          <xs:enumeration value="InterestNote" />
+          <xs:enumeration value="Bond" />
+          <xs:enumeration value="DebtAcknowledgment" />
+          <xs:enumeration value="Agreement" />
+          <xs:enumeration value="CourtDecision" />
+          <xs:enumeration value="WritOfExecution" />
+          <xs:enumeration value="LegalCosts" />
+          <xs:enumeration value="ExecutionCosts" />
+          <xs:enumeration value="Alimony" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="ArrayOfPaidObligationInformation">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="PaidObligationInformation" type="tns:PaidObligationInformation" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PaidObligationInformation">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Provider" type="tns:PProvider" />
+          <xs:element minOccurs="1" maxOccurs="1" name="ShowProvider" type="xs:boolean" />
+          <xs:element minOccurs="0" maxOccurs="1" name="PaidObligationsForSubjects" type="tns:ArrayOfPaidObligationsForSubject" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PProvider">
+        <xs:sequence>
+          <xs:choice minOccurs="1" maxOccurs="1">
+            <xs:element minOccurs="0" maxOccurs="1" name="Consumer" type="tns:ConsumerPProvider" />
+            <xs:element minOccurs="0" maxOccurs="1" name="Entrepreneur" type="tns:EntrepreneurPProvider" />
+            <xs:element minOccurs="0" maxOccurs="1" name="LegalPerson" type="tns:LegalPersonPProvider" />
+          </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="category" type="xs:int" use="required" />
+      </xs:complexType>
+      <xs:complexType name="ConsumerPProvider" />
+      <xs:complexType name="EntrepreneurPProvider">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="IdentityNumber" type="tns:NonConsumerIdentityNumber" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="SeatAddress" type="tns:Address" />
+          <xs:element minOccurs="0" maxOccurs="1" name="LivingAddress" type="tns:Address" />
+          <xs:element minOccurs="0" maxOccurs="1" name="CorrespondenceAddress" type="tns:Address" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Branch" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Ekd" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="LegalPersonPProvider">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="IdentityNumber" type="tns:NonConsumerIdentityNumber" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="SeatAddress" type="tns:Address" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Branch" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Ekd" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ArrayOfPaidObligationsForSubject">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="PaidObligationsForSubject" nillable="true" type="tns:PaidObligationsForSubject" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PaidObligationsForSubject">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Subject" type="tns:Subject" />
+          <xs:element minOccurs="0" maxOccurs="1" name="PaidObligations" type="tns:ArrayOfPaidObligation" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Subject">
+        <xs:sequence>
+          <xs:choice minOccurs="1" maxOccurs="1">
+            <xs:element minOccurs="0" maxOccurs="1" name="Consumer" type="tns:ConsumerSubject" />
+            <xs:element minOccurs="0" maxOccurs="1" name="Entrepreneur" type="tns:EntrepreneurSubject" />
+            <xs:element minOccurs="0" maxOccurs="1" name="LegalPerson" type="tns:LegalPersonSubject" />
+          </xs:choice>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ConsumerSubject">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="IdentityNumber" type="tns:ConsumerIdentityNumber" />
+          <xs:element minOccurs="0" maxOccurs="1" name="FirstName" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="SecondName" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Surname" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="EntrepreneurSubject">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="IdentityNumber" type="tns:NonConsumerIdentityNumber" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="SeatAddress" type="tns:Address" />
+          <xs:element minOccurs="0" maxOccurs="1" name="CorrespondenceAddress" type="tns:Address" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="LegalPersonSubject">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="IdentityNumber" type="tns:NonConsumerIdentityNumber" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="SeatAddress" type="tns:Address" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ArrayOfPaidObligation">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="PaidObligation" nillable="true" type="tns:PaidObligation" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PaidObligation">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="Currency" type="tns:Currency" />
+          <xs:element minOccurs="1" maxOccurs="1" name="TotalDebt" type="xs:decimal" />
+          <xs:element minOccurs="1" maxOccurs="1" name="PaidDebt" type="xs:decimal" />
+          <xs:element minOccurs="1" maxOccurs="1" name="DueDate" type="xs:dateTime" />
+          <xs:element minOccurs="1" maxOccurs="1" name="PaidDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Reason" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="CustomReason" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="IsSumOfInstalments" type="xs:boolean" />
+          <xs:element minOccurs="1" maxOccurs="1" name="TotalDebtPLN" type="xs:decimal" />
+          <xs:element minOccurs="1" maxOccurs="1" name="PaidDebtPLN" type="xs:decimal" />
+        </xs:sequence>
+        <xs:attribute name="category" type="xs:int" use="required" />
+        <xs:attribute name="subcategory" type="xs:int" />
+      </xs:complexType>
+      <xs:element name="SearchNonConsumerRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="Number" type="xs:string" />
+            <xs:element minOccurs="1" maxOccurs="1" name="NumberType" type="tns:NonConsumerNumberType" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:simpleType name="NonConsumerNumberType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="TaxId" />
+          <xs:enumeration value="OtherNumber" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="DisclosureReportRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="ReportNumber" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+    <xs:schema xmlns:tns="http://krd.pl/Authorization" elementFormDefault="qualified" targetNamespace="http://krd.pl/Authorization" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="Authorization" type="tns:RequestAuthorizationHeader" />
+      <xs:complexType name="RequestAuthorizationHeader">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="AuthorizationType" type="tns:AuthorizationType" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Login" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Password" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="PasswordHash" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Ticket" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="AuthorizationType">
+        <xs:list>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="LoginAndPassword" />
+              <xs:enumeration value="LoginAndPasswordHash" />
+              <xs:enumeration value="Ticket" />
+              <xs:enumeration value="Certificate" />
+              <xs:enumeration value="CertificateWithCredentials" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:list>
+      </xs:simpleType>
+    </xs:schema>
+    <xs:schema xmlns:tns="http://krd.pl/Authorization/Response" elementFormDefault="qualified" targetNamespace="http://krd.pl/Authorization/Response" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="Authorization" type="tns:ResponseAuthorizationHeader" />
+      <xs:complexType name="ResponseAuthorizationHeader">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="Ticket" nillable="true" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="TicketExpirationDate" type="xs:dateTime" />
+          <xs:element minOccurs="1" maxOccurs="1" name="ShouldChangePassword" type="xs:boolean" />
+          <xs:element minOccurs="1" maxOccurs="1" name="PasswordExpirationDate" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema xmlns:tns="http://krd.pl/Chase3.1/Fault" elementFormDefault="qualified" targetNamespace="http://krd.pl/Chase3.1/Fault" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://krd.pl/Faults" />
+      <xs:element xmlns:q1="http://krd.pl/Faults" name="SecurityFault" type="q1:SecurityFault" />
+      <xs:element xmlns:q2="http://krd.pl/Faults" name="DefaultFault" type="q2:DefaultFault" />
+      <xs:element xmlns:q3="http://krd.pl/Faults" name="ValidationFault" type="q3:ValidationFault" />
+      <xs:element xmlns:q4="http://krd.pl/Faults" name="SchemaValidationFault" type="q4:SchemaValidationFault" />
+      <xs:element xmlns:q5="http://krd.pl/Faults" name="EntityNotFoundFault" type="q5:EntityNotFoundFault" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://krd.pl/Faults" elementFormDefault="qualified" targetNamespace="http://krd.pl/Faults" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://microsoft.com/wsdl/types/" />
+      <xs:import namespace="http://www.w3.org/XML/1998/namespace" />
+      <xs:complexType name="SecurityFault">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:DefaultFault" />
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="DefaultFault">
+        <xs:attribute xmlns:q1="http://microsoft.com/wsdl/types/" name="id" type="q1:guid" use="required" />
+        <xs:attribute name="code" type="xs:int" use="required" />
+      </xs:complexType>
+      <xs:complexType name="SchemaValidationFault">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:DefaultFault">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="1" name="Details" type="tns:ArrayOfSchemaValidationFaultDetail" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="ArrayOfSchemaValidationFaultDetail">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Detail" nillable="true" type="tns:SchemaValidationFaultDetail" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SchemaValidationFaultDetail">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Message" type="tns:ArrayOfValidationDetailMessageText" />
+        </xs:sequence>
+        <xs:attribute name="line" type="xs:int" use="required" />
+        <xs:attribute name="column" type="xs:int" use="required" />
+      </xs:complexType>
+      <xs:complexType name="ArrayOfValidationDetailMessageText">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Text" nillable="true" type="tns:ValidationDetailMessageText" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ValidationDetailMessageText">
+        <xs:simpleContent>
+          <xs:extension base="xs:string">
+            <xs:attribute ref="xml:lang" use="optional" />
+          </xs:extension>
+        </xs:simpleContent>
+      </xs:complexType>
+      <xs:complexType name="ValidationFault">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:DefaultFault">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="1" name="Details" type="tns:ArrayOfValidationFaultDetail" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="ArrayOfValidationFaultDetail">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Detail" nillable="true" type="tns:ValidationFaultDetail" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ValidationFaultDetail">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Key" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Message" type="tns:ArrayOfValidationDetailMessageText" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="EntityNotFoundFault">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:DefaultFault">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="1" name="EntityId" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema xmlns:tns="http://microsoft.com/wsdl/types/" elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:simpleType name="guid">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="SearchConsumerRequest">
+    <wsdl:part xmlns:q1="http://krd.pl/Chase3.1/Dto" name="parameters" element="q1:SearchConsumerRequest" />
+  </wsdl:message>
+  <wsdl:message name="SearchConsumerRequest_Headers">
+    <wsdl:part xmlns:q2="http://krd.pl/Authorization" name="Authorization" element="q2:Authorization" />
+  </wsdl:message>
+  <wsdl:message name="InformationDisclosureResponse">
+    <wsdl:part xmlns:q3="http://krd.pl/Chase3.1/Dto" name="parameters" element="q3:InformationDisclosureResponse" />
+  </wsdl:message>
+  <wsdl:message name="InformationDisclosureResponse_Headers">
+    <wsdl:part xmlns:q4="http://krd.pl/Authorization/Response" name="Authorization" element="q4:Authorization" />
+  </wsdl:message>
+  <wsdl:message name="ISearch_SearchConsumer_SecurityFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://krd.pl/Chase3.1/Fault" name="detail" element="q5:SecurityFault" />
+  </wsdl:message>
+  <wsdl:message name="ISearch_SearchConsumer_DefaultFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://krd.pl/Chase3.1/Fault" name="detail" element="q6:DefaultFault" />
+  </wsdl:message>
+  <wsdl:message name="ISearch_SearchConsumer_ValidationFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://krd.pl/Chase3.1/Fault" name="detail" element="q7:ValidationFault" />
+  </wsdl:message>
+  <wsdl:message name="ISearch_SearchConsumer_SchemaValidationFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://krd.pl/Chase3.1/Fault" name="detail" element="q8:SchemaValidationFault" />
+  </wsdl:message>
+  <wsdl:message name="SearchNonConsumerRequest">
+    <wsdl:part xmlns:q9="http://krd.pl/Chase3.1/Dto" name="parameters" element="q9:SearchNonConsumerRequest" />
+  </wsdl:message>
+  <wsdl:message name="SearchNonConsumerRequest_Headers">
+    <wsdl:part xmlns:q10="http://krd.pl/Authorization" name="Authorization" element="q10:Authorization" />
+  </wsdl:message>
+  <wsdl:message name="ISearch_SearchNonConsumer_SecurityFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://krd.pl/Chase3.1/Fault" name="detail" element="q11:SecurityFault" />
+  </wsdl:message>
+  <wsdl:message name="ISearch_SearchNonConsumer_DefaultFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://krd.pl/Chase3.1/Fault" name="detail" element="q12:DefaultFault" />
+  </wsdl:message>
+  <wsdl:message name="ISearch_SearchNonConsumer_ValidationFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://krd.pl/Chase3.1/Fault" name="detail" element="q13:ValidationFault" />
+  </wsdl:message>
+  <wsdl:message name="ISearch_SearchNonConsumer_SchemaValidationFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://krd.pl/Chase3.1/Fault" name="detail" element="q14:SchemaValidationFault" />
+  </wsdl:message>
+  <wsdl:message name="DisclosureReportRequest">
+    <wsdl:part xmlns:q15="http://krd.pl/Chase3.1/Dto" name="parameters" element="q15:DisclosureReportRequest" />
+  </wsdl:message>
+  <wsdl:message name="DisclosureReportRequest_Headers">
+    <wsdl:part xmlns:q16="http://krd.pl/Authorization" name="Authorization" element="q16:Authorization" />
+  </wsdl:message>
+  <wsdl:message name="ISearch_GetDisclosureReport_SecurityFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://krd.pl/Chase3.1/Fault" name="detail" element="q17:SecurityFault" />
+  </wsdl:message>
+  <wsdl:message name="ISearch_GetDisclosureReport_DefaultFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://krd.pl/Chase3.1/Fault" name="detail" element="q18:DefaultFault" />
+  </wsdl:message>
+  <wsdl:message name="ISearch_GetDisclosureReport_ValidationFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://krd.pl/Chase3.1/Fault" name="detail" element="q19:ValidationFault" />
+  </wsdl:message>
+  <wsdl:message name="ISearch_GetDisclosureReport_EntityNotFoundFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://krd.pl/Chase3.1/Fault" name="detail" element="q20:EntityNotFoundFault" />
+  </wsdl:message>
+  <wsdl:message name="ISearch_GetDisclosureReport_SchemaValidationFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://krd.pl/Chase3.1/Fault" name="detail" element="q21:SchemaValidationFault" />
+  </wsdl:message>
+  <wsdl:portType name="ISearch">
+    <wsdl:operation name="SearchConsumer">
+      <wsdl:input wsaw:Action="http://krd.pl/Chase3.1/ISearch/SearchConsumer" name="SearchConsumerRequest" message="tns:SearchConsumerRequest" />
+      <wsdl:output wsaw:Action="http://krd.pl/Chase3.1/ISearch/SearchConsumerResponse" name="InformationDisclosureResponse" message="tns:InformationDisclosureResponse" />
+      <wsdl:fault wsaw:Action="http://krd.pl/Chase3.1/ISearch/SearchConsumerSecurityFault" name="SecurityFault" message="tns:ISearch_SearchConsumer_SecurityFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://krd.pl/Chase3.1/ISearch/SearchConsumerDefaultFault" name="DefaultFault" message="tns:ISearch_SearchConsumer_DefaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://krd.pl/Chase3.1/ISearch/SearchConsumerValidationFault" name="ValidationFault" message="tns:ISearch_SearchConsumer_ValidationFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://krd.pl/Chase3.1/ISearch/SearchConsumerSchemaValidationFault" name="SchemaValidationFault" message="tns:ISearch_SearchConsumer_SchemaValidationFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchNonConsumer">
+      <wsdl:input wsaw:Action="http://krd.pl/Chase3.1/ISearch/SearchNonConsumer" name="SearchNonConsumerRequest" message="tns:SearchNonConsumerRequest" />
+      <wsdl:output wsaw:Action="http://krd.pl/Chase3.1/ISearch/SearchNonConsumerResponse" name="InformationDisclosureResponse" message="tns:InformationDisclosureResponse" />
+      <wsdl:fault wsaw:Action="http://krd.pl/Chase3.1/ISearch/SearchNonConsumerSecurityFault" name="SecurityFault" message="tns:ISearch_SearchNonConsumer_SecurityFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://krd.pl/Chase3.1/ISearch/SearchNonConsumerDefaultFault" name="DefaultFault" message="tns:ISearch_SearchNonConsumer_DefaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://krd.pl/Chase3.1/ISearch/SearchNonConsumerValidationFault" name="ValidationFault" message="tns:ISearch_SearchNonConsumer_ValidationFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://krd.pl/Chase3.1/ISearch/SearchNonConsumerSchemaValidationFault" name="SchemaValidationFault" message="tns:ISearch_SearchNonConsumer_SchemaValidationFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDisclosureReport">
+      <wsdl:input wsaw:Action="http://krd.pl/Chase3.1/ISearch/GetDisclosureReport" name="DisclosureReportRequest" message="tns:DisclosureReportRequest" />
+      <wsdl:output wsaw:Action="http://krd.pl/Chase3.1/ISearch/GetDisclosureReportResponse" name="InformationDisclosureResponse" message="tns:InformationDisclosureResponse" />
+      <wsdl:fault wsaw:Action="http://krd.pl/Chase3.1/ISearch/GetDisclosureReportSecurityFault" name="SecurityFault" message="tns:ISearch_GetDisclosureReport_SecurityFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://krd.pl/Chase3.1/ISearch/GetDisclosureReportDefaultFault" name="DefaultFault" message="tns:ISearch_GetDisclosureReport_DefaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://krd.pl/Chase3.1/ISearch/GetDisclosureReportValidationFault" name="ValidationFault" message="tns:ISearch_GetDisclosureReport_ValidationFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://krd.pl/Chase3.1/ISearch/GetDisclosureReportEntityNotFoundFault" name="EntityNotFoundFault" message="tns:ISearch_GetDisclosureReport_EntityNotFoundFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://krd.pl/Chase3.1/ISearch/GetDisclosureReportSchemaValidationFault" name="SchemaValidationFault" message="tns:ISearch_GetDisclosureReport_SchemaValidationFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DefaultEndpoint" type="tns:ISearch">
+    <wsp:PolicyReference URI="#DefaultEndpoint_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SearchConsumer">
+      <soap:operation soapAction="http://krd.pl/Chase3.1/ISearch/SearchConsumer" style="document" />
+      <wsdl:input name="SearchConsumerRequest">
+        <soap:header message="tns:SearchConsumerRequest_Headers" part="Authorization" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="InformationDisclosureResponse">
+        <soap:header message="tns:InformationDisclosureResponse_Headers" part="Authorization" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SecurityFault">
+        <soap:fault use="literal" name="SecurityFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="DefaultFault">
+        <soap:fault use="literal" name="DefaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFault">
+        <soap:fault use="literal" name="ValidationFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="SchemaValidationFault">
+        <soap:fault use="literal" name="SchemaValidationFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SearchNonConsumer">
+      <soap:operation soapAction="http://krd.pl/Chase3.1/ISearch/SearchNonConsumer" style="document" />
+      <wsdl:input name="SearchNonConsumerRequest">
+        <soap:header message="tns:SearchNonConsumerRequest_Headers" part="Authorization" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="InformationDisclosureResponse">
+        <soap:header message="tns:InformationDisclosureResponse_Headers" part="Authorization" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SecurityFault">
+        <soap:fault use="literal" name="SecurityFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="DefaultFault">
+        <soap:fault use="literal" name="DefaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFault">
+        <soap:fault use="literal" name="ValidationFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="SchemaValidationFault">
+        <soap:fault use="literal" name="SchemaValidationFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetDisclosureReport">
+      <soap:operation soapAction="http://krd.pl/Chase3.1/ISearch/GetDisclosureReport" style="document" />
+      <wsdl:input name="DisclosureReportRequest">
+        <soap:header message="tns:DisclosureReportRequest_Headers" part="Authorization" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="InformationDisclosureResponse">
+        <soap:header message="tns:InformationDisclosureResponse_Headers" part="Authorization" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SecurityFault">
+        <soap:fault use="literal" name="SecurityFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="DefaultFault">
+        <soap:fault use="literal" name="DefaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFault">
+        <soap:fault use="literal" name="ValidationFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="EntityNotFoundFault">
+        <soap:fault use="literal" name="EntityNotFoundFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="SchemaValidationFault">
+        <soap:fault use="literal" name="SchemaValidationFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WsHttpBindingEndpoint" type="tns:ISearch">
+    <wsp:PolicyReference URI="#WsHttpBindingEndpoint_policy" />
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SearchConsumer">
+      <soap12:operation soapAction="http://krd.pl/Chase3.1/ISearch/SearchConsumer" style="document" />
+      <wsdl:input name="SearchConsumerRequest">
+        <soap12:header message="tns:SearchConsumerRequest_Headers" part="Authorization" use="literal" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="InformationDisclosureResponse">
+        <soap12:header message="tns:InformationDisclosureResponse_Headers" part="Authorization" use="literal" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SecurityFault">
+        <soap12:fault use="literal" name="SecurityFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="DefaultFault">
+        <soap12:fault use="literal" name="DefaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFault">
+        <soap12:fault use="literal" name="ValidationFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="SchemaValidationFault">
+        <soap12:fault use="literal" name="SchemaValidationFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SearchNonConsumer">
+      <soap12:operation soapAction="http://krd.pl/Chase3.1/ISearch/SearchNonConsumer" style="document" />
+      <wsdl:input name="SearchNonConsumerRequest">
+        <soap12:header message="tns:SearchNonConsumerRequest_Headers" part="Authorization" use="literal" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="InformationDisclosureResponse">
+        <soap12:header message="tns:InformationDisclosureResponse_Headers" part="Authorization" use="literal" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SecurityFault">
+        <soap12:fault use="literal" name="SecurityFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="DefaultFault">
+        <soap12:fault use="literal" name="DefaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFault">
+        <soap12:fault use="literal" name="ValidationFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="SchemaValidationFault">
+        <soap12:fault use="literal" name="SchemaValidationFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetDisclosureReport">
+      <soap12:operation soapAction="http://krd.pl/Chase3.1/ISearch/GetDisclosureReport" style="document" />
+      <wsdl:input name="DisclosureReportRequest">
+        <soap12:header message="tns:DisclosureReportRequest_Headers" part="Authorization" use="literal" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="InformationDisclosureResponse">
+        <soap12:header message="tns:InformationDisclosureResponse_Headers" part="Authorization" use="literal" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SecurityFault">
+        <soap12:fault use="literal" name="SecurityFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="DefaultFault">
+        <soap12:fault use="literal" name="DefaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationFault">
+        <soap12:fault use="literal" name="ValidationFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="EntityNotFoundFault">
+        <soap12:fault use="literal" name="EntityNotFoundFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="SchemaValidationFault">
+        <soap12:fault use="literal" name="SchemaValidationFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SearchService">
+    <wsdl:port name="DefaultEndpoint" binding="tns:DefaultEndpoint">
+      <soap:address location="https://demo.krd.pl/Chase/3.1/Search.svc/basic" />
+    </wsdl:port>
+    <wsdl:port name="WsHttpBindingEndpoint" binding="tns:WsHttpBindingEndpoint">
+      <soap12:address location="https://demo.krd.pl/Chase/3.1/Search.svc/ws" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>https://demo.krd.pl/Chase/3.1/Search.svc/ws</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
