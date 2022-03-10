@@ -57,14 +57,24 @@ namespace KRD_Api
             try
             {
                 sc.SearchNonConsumer(auth, tx_numer.Text, NonConsumerNumberType.TaxId, out dr);
-                
-                string text_result = dr.Number;
-                text_result += " Pesel:" + dr.SearchCriterion.ConsumerIdentityNumber.Item;
-                text_result += " Liczba informacji:" + dr.Summary.InformationCount;
-                text_result += " Liczba informacji pozytywnych:" + dr.PositiveInformationSummary.PaidObligationsCount;
-                text_result += " Suma zobowiązań:" + dr.Summary.TotalArrears.Amount + " " + dr.Summary.TotalArrears.Amount;
 
-                tx_results.Text = text_result;
+
+                tx_results.Text += dr.Created.ToString();
+                    tx_results.Text += " ";
+                    tx_results.Text += dr.Number;
+                if (dr.SearchCriterion.ConsumerIdentityNumber != null)
+                        {
+                        tx_results.Text += " Pesel:" + dr.SearchCriterion.ConsumerIdentityNumber.Item;
+                        tx_results.Text += " Liczba informacji:" + dr.Summary.InformationCount;
+                        tx_results.Text += " Liczba informacji pozytywnych:" + dr.PositiveInformationSummary.PaidObligationsCount;
+                        tx_results.Text += " Suma zobowiązań:" + dr.Summary.TotalArrears.Amount + " " + dr.Summary.TotalArrears.Amount;
+                        }
+                    else
+                    {
+                        tx_results.Text += " BRAK DANYCH ";
+                    }
+                    tx_results.Text += "\r\n";
+
                 }
             catch (Exception err)
             {

@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rad_cert = new System.Windows.Forms.RadioButton();
             this.rad_login = new System.Windows.Forms.RadioButton();
+            this.rad_cert = new System.Windows.Forms.RadioButton();
             this.gr_login = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tb_login = new System.Windows.Forms.TextBox();
             this.tb_pass = new System.Windows.Forms.TextBox();
+            this.tb_login = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.bt_spr_firme = new System.Windows.Forms.Button();
             this.br_spr_kons = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -58,18 +58,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Metoda logowania";
             // 
-            // rad_cert
-            // 
-            this.rad_cert.AutoSize = true;
-            this.rad_cert.Location = new System.Drawing.Point(6, 19);
-            this.rad_cert.Name = "rad_cert";
-            this.rad_cert.Size = new System.Drawing.Size(69, 17);
-            this.rad_cert.TabIndex = 0;
-            this.rad_cert.TabStop = true;
-            this.rad_cert.Text = "Certyfikat";
-            this.rad_cert.UseVisualStyleBackColor = true;
-            this.rad_cert.CheckedChanged += new System.EventHandler(this.rad_cert_CheckedChanged);
-            // 
             // rad_login
             // 
             this.rad_login.AutoSize = true;
@@ -81,6 +69,18 @@
             this.rad_login.Text = "Login i Hasło";
             this.rad_login.UseVisualStyleBackColor = true;
             this.rad_login.CheckedChanged += new System.EventHandler(this.rad_login_CheckedChanged);
+            // 
+            // rad_cert
+            // 
+            this.rad_cert.AutoSize = true;
+            this.rad_cert.Location = new System.Drawing.Point(6, 19);
+            this.rad_cert.Name = "rad_cert";
+            this.rad_cert.Size = new System.Drawing.Size(69, 17);
+            this.rad_cert.TabIndex = 0;
+            this.rad_cert.TabStop = true;
+            this.rad_cert.Text = "Certyfikat";
+            this.rad_cert.UseVisualStyleBackColor = true;
+            this.rad_cert.CheckedChanged += new System.EventHandler(this.rad_cert_CheckedChanged);
             // 
             // gr_login
             // 
@@ -94,14 +94,21 @@
             this.gr_login.TabIndex = 2;
             this.gr_login.TabStop = false;
             // 
-            // label1
+            // tb_pass
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(33, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Login";
+            this.tb_pass.Location = new System.Drawing.Point(56, 40);
+            this.tb_pass.Name = "tb_pass";
+            this.tb_pass.Size = new System.Drawing.Size(100, 20);
+            this.tb_pass.TabIndex = 3;
+            this.tb_pass.Text = "KRD123!@";
+            // 
+            // tb_login
+            // 
+            this.tb_login.Location = new System.Drawing.Point(56, 16);
+            this.tb_login.Name = "tb_login";
+            this.tb_login.Size = new System.Drawing.Size(100, 20);
+            this.tb_login.TabIndex = 2;
+            this.tb_login.Text = "2D2E3BBCDC";
             // 
             // label2
             // 
@@ -112,19 +119,14 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Hasło";
             // 
-            // tb_login
+            // label1
             // 
-            this.tb_login.Location = new System.Drawing.Point(56, 16);
-            this.tb_login.Name = "tb_login";
-            this.tb_login.Size = new System.Drawing.Size(100, 20);
-            this.tb_login.TabIndex = 2;
-            // 
-            // tb_pass
-            // 
-            this.tb_pass.Location = new System.Drawing.Point(56, 40);
-            this.tb_pass.Name = "tb_pass";
-            this.tb_pass.Size = new System.Drawing.Size(100, 20);
-            this.tb_pass.TabIndex = 3;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(33, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Login";
             // 
             // bt_spr_firme
             // 
